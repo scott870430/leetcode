@@ -1,0 +1,40 @@
+/*
+ * @lc app=leetcode id=706 lang=cpp
+ *
+ * [706] Design HashMap
+ */
+
+// @lc code=start
+class MyHashMap
+{
+public:
+    vector<int> hashmap;
+    MyHashMap()
+    {
+        hashmap = vector<int>(1000000 + 1, -1);
+    }
+
+    void put(int key, int value)
+    {
+        hashmap[key] = value;
+    }
+
+    int get(int key)
+    {
+        return hashmap[key];
+    }
+
+    void remove(int key)
+    {
+        hashmap[key] = -1;
+    }
+};
+
+/**
+ * Your MyHashMap object will be instantiated and called as such:
+ * MyHashMap* obj = new MyHashMap();
+ * obj->put(key,value);
+ * int param_2 = obj->get(key);
+ * obj->remove(key);
+ */
+// @lc code=end

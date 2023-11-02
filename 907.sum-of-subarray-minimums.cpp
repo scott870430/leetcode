@@ -8,37 +8,44 @@
 class Solution
 {
 public:
+    long long sums(long long left, long long right, long long ind, long long num)
+    {
+        // cout << num * (ind - left) * (right - ind) << endl;
+        return num * (ind - left) * (right - ind);
+    }
     int sumSubarrayMins(vector<int> &arr)
     {
-        int n = arr.size();
-        vector<int> left(n), right(n);
+        long long ans = 0;
+        int MOD = 1e9 + 7;
         stack<int> st;
-        for (int i = 0; i < n; i += 1)
+        for (int i = 0; i < arr.size(); i += 1)
         {
-            while (!st.empty() && arr[st.top()] >= arr[i])
+            while (!st.empty() && arr[i] < arr[st.top()])
             {
-                right[st.top()] = i - 1;
+                int ind = st.top();
+                int num = arr[ind];
                 st.pop();
-            }
-            if (st.empty())
-            {
-                left[i] = 0;
-            }
-            else
-            {
-                left[i] = st.top() + 1;
+                int start = -1;
+                if (!st.empty())
+                {
+                    start = st.top();
+                }
+                ans = (ans + sums(start, i, ind, num)) % MOD;
             }
             st.push(i);
+            // cout << ans << endl;
         }
         while (!st.empty())
         {
-            right[st.top()] = n - 1;
+            int ind = st.top();
+            int num = arr[ind];
             st.pop();
-        }
-        long long ans = 0, MOD = 1e9 + 7;
-        for (int i = 0; i < n; i += 1)
-        {
-            ans = (ans + ((i - left[i] + 1) * (right[i] - i + 1) % MOD) * arr[i]) % MOD;
+            int start = -1;
+            if (!st.empty())
+            {
+                start = st.top();
+            }
+            ans = (ans + sums(start, arr.size(), ind, num)) % MOD;
         }
         return ans;
     }
